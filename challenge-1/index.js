@@ -4,11 +4,12 @@ let second = document.getElementById("seconds");
 let settings = document.getElementById("settings");
 let ring = document.getElementById("ring");
 let interval;
-let minutes = 15;
-let seconds = 0;
+let minutes = 0;
+let seconds = 3;
 let tempMinutes = minutes;
 let tempSeconds = seconds;
 let shouldRun = true;
+let audio;
 
 setTime(minutes, seconds);
 
@@ -18,8 +19,20 @@ function beep() {
 }
 
 button.onclick = () => {
-    button.innerText == "START" || button.innerText == "RESTART" ? button.innerText = "STOP" : button.innerText = "START";
-    button.innerText == "STOP" ? start() : pause();
+    if (button.innerText == "STOP" && minutes == 0 && seconds == 0) {
+        minutes = tempMinutes
+        seconds = tempSeconds
+        setTime(minutes, seconds);
+        ring.classList.remove("ending", "circle");
+    }
+    if (button.innerText == "START") {
+        button.innerText = "STOP"
+        start();
+    } else {
+        pause()
+        clearInterval(audio);
+        button.innerText = "START"
+    }
 }
 
 function setMinuteAndSecond(shouldDisable) {
@@ -30,6 +43,7 @@ function setMinuteAndSecond(shouldDisable) {
 settings.onclick = () => {
     button.innerText = "START";
     setMinuteAndSecond(false);
+    clearInterval(audio);
 }
 
 minute.onchange = (e) => {
@@ -53,6 +67,7 @@ function sendAlert(message) {
 }
 
 function start() {
+    ring.classList.remove("ending", "circle");
     settings.disabled = true;
     shouldRun = true;
 
@@ -62,7 +77,6 @@ function start() {
         return;
     }
 
-    ring.classList.remove("ending", "circle");
     setTime(minutes, seconds);
     setMinuteAndSecond(true)
 
@@ -125,10 +139,11 @@ function validateData(minutes, seconds) {
 
 function onComplete() {
     ring.classList.add("ending", "circle");
+    beep()
+    audio = setInterval(() => {
+        beep();
+    }, 500);
     pause()
-    beep();
     document.getElementById("settings").disabled = false;
-    minutes = tempMinutes
-    seconds = tempSeconds
-    button.innerText = "RESTART"
+    button.innerText = "STOP"
 }
