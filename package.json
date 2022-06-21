@@ -1,5 +1,5 @@
 {
-  "name": "challenges-final",
+  "name": "challenges",
   "version": "1.0.0",
   "description": "Javascript Challenges",
   "main": "index.js",
@@ -7,12 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install client/.husky"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^8.18.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.2",
@@ -25,9 +25,8 @@
     }
   },
   "lint-staged": {
-    "*.js": [
-      "eslint",
-      "prettier"
-    ]
+    "*.js": ["eslint", "prettier"],
+    "*.html": ["eslint", "prettier"],
+    "*.css": ["eslint", "prettier"]
   }
 }
