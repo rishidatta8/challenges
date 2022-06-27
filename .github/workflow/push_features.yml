@@ -3,7 +3,7 @@ name: ESLint, StyleLint, prettier
 on:
   push:
     branches:
-      - master
+      - features
 
 jobs:
   eslint:
